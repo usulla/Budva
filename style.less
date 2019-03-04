@@ -1,0 +1,647 @@
+/* Variables */
+@sea: #6fc3ed;
+@sky: #d9edf4;
+@stone1: #996633;
+@stone2: #996633;
+@mountain: #b3cbe2;
+@mountain2: #91abbf;
+@white: #ffffff;
+@black: #000;
+@yellow:#f7ed6b;
+@statue-light:#eaf7f6;
+@statue-middle:#d5eae9;
+@statue-dark:#c0dbd8;
+@statue-head:#adc9c8;
+@house-body:#fdfcf7;
+@roof:#ce6a61;
+
+/* Mixins */
+.transition(@property: all, @duration: 0.3s, @function: linear) {
+	-webkit-transition: @arguments;
+	-moz-transition: @arguments;
+	-o-transition: @arguments;
+	transition: @arguments;
+}
+.keyframes(@name; @arguments) {
+	@-moz-keyframes @name {
+		@arguments();
+	}
+	@-webkit-keyframes @name {
+		@arguments();
+	}
+	@keyframes @name {
+		@arguments();
+	}
+}
+.animation(@arguments) {
+	-webkit-animation: @arguments;
+	-moz-animation: @arguments;
+	animation: @arguments;
+}
+.size(@w: 100vw, @h: 100vh ) {
+	width: @w;
+	height: @h;
+}
+
+body {
+	.size;
+	margin:0;
+	position:relative;
+	overflow:hidden;
+}
+.keyframes (seawave; {
+	to{transform:scaleY(1.07);};
+	});
+.sky {
+	position: relative;
+	background: @sky;
+	.size(100vw, 65vh);
+
+	.sun{
+		z-index: 8;
+		background: @yellow;
+		.size(8vw, 8vw);
+		border-radius: 8vw;
+		position: absolute;
+		right: 4vw;
+		top: 2vw;
+
+		animation:sun 5s ease-in-out infinite;
+		transform-origin:0% 0%;
+		@keyframes sun{
+			0%{
+				transform:scaleY(1) scaleX(1);
+			}
+			50%{
+				transform:scaleY(1.25) scaleX(1.25);
+			}
+			100%{
+				transform:scaleY(1) scaleX(1);
+			}
+		}
+		@keyframes cloudmove{
+			0%{
+				transform:translateX(0vw);
+			}
+			50%{
+				transform:translateX(5vw);
+			}
+			100%{
+				transform:translateX(10vw);
+			}
+		}
+		.sunlite{
+			z-index:6;
+			position: absolute;
+			right: 50%;
+			top: 50%;
+			span{
+				z-index:6;
+				position:absolute;
+				width:4px;
+				height: 4vw;
+				top:0;
+				border-radius:100%;
+				transform-origin:0% 0%;
+
+				&:nth-of-type(2){
+					transform:rotate(-67deg);
+					&:before{
+						background:@yellow;
+					}
+				}
+				&:nth-of-type(3){
+					transform:rotate(-45deg);
+					&:before{
+						background:@yellow;
+					}
+				}
+				&:nth-of-type(4){
+					transform:rotate(-22deg);
+					&:before{
+						background:@yellow;
+					}
+				}
+				&:nth-of-type(5){
+					transform:rotate(22deg);
+					&:before{
+						background:@yellow;
+					}
+				}
+				&:nth-of-type(6){
+					transform:rotate(45deg);
+					&:before{
+						background:@yellow;
+					}
+				}
+				&:nth-of-type(7){
+					transform:rotate(67deg);
+					&:before{
+						background:@yellow;
+					}
+				}
+				&:nth-of-type(8){
+					transform:rotate(90deg);
+					&:before{
+						background:@yellow;
+					}
+				}
+				&:before{
+					content:'';
+					position:absolute;
+					width:100%;
+					height:100%;
+					border-radius:500%;
+					background:@yellow;
+					animation:burst 5s ease-out infinite;
+					@keyframes burst{
+						0%{
+							transform:translateY(0);
+						}
+						50%{
+							transform:translateY(0);
+						}
+						55%{
+							transform:translateY(300px);
+							opacity:1;
+						}
+						92%{
+							transform:translateY(320px);
+							opacity:0;
+						}
+						100%{
+							opacity:0;
+						}
+					}
+				}
+			}
+		}
+	} //sun
+	.cloud{
+		background: #fff;
+		border-radius: 100%;
+		position: absolute;
+		-moz-filter: blur(6px);
+		-o-filter: blur(6px);
+		-ms-filter: blur(6px);
+		filter: blur(6px);
+		.animation (cloudmove 4s ease-in-out infinite alternate);
+		transform-origin:bottom;
+	}
+	.cloud:nth-child(1){
+		width: 14vw;
+		height: 3vw;
+		top: 19vh;
+		left: 35vw;
+	}
+	.cloud:nth-child(2){
+		width: 11vw;
+		height: 4vw;
+		top: 12vh;
+		left: 8vw;
+		.animation (cloudmove 3s ease-in-out infinite alternate);
+	}
+	.cloud:nth-child(3){
+		width: 15vw;
+		height: 2vw;
+		top: 29vh;
+		right: 29vw;
+	}
+	.cloud:nth-child(4){
+		width: 12vw;
+		height: 3vw;
+		top: 23vh;
+		right: -5vw;
+	}
+	.mountains {
+		height: 100%;
+		position: relative;
+		span{
+			position: absolute;
+			bottom: 0;
+			width: 0vw;
+		}
+		span:first-child{
+			left: 0;
+			border-bottom: 30vw solid @mountain;
+			border-left: 0vw solid transparent;
+			border-right: 25vw solid transparent;
+		}
+		span:nth-child(2){
+			z-index:2;
+			left: 10vw;
+			border-bottom: 25vw solid @mountain2;
+			border-left: 20vw solid transparent;
+			border-right: 30vw solid transparent;
+		}
+		span:nth-child(3){
+			z-index: 3;
+			left: 20vw;
+			border-bottom: 35vw solid @mountain;
+			border-left: 30vw solid transparent;
+			border-right: 30vw solid transparent;
+		}
+		span:nth-child(4){
+			left: 50vw;
+			border-bottom: 20vw solid @mountain2;
+			border-left: 30vw solid transparent;
+			border-right: 30vw solid transparent;
+		}
+		span:nth-child(5){
+			z-index:4;
+			left: 10vw;
+			border-bottom: 8vw solid #3d4a56;
+			border-left: 15vw solid transparent;
+			border-right: 20vw solid transparent;
+		}
+		span:nth-child(6){
+			z-index:4;
+			left: 30vw;
+			border-bottom: 5vw solid #3d4a56;
+			border-left: 15vw solid transparent;
+			border-right: 20vw solid transparent;
+		}
+		span:nth-child(7){
+			z-index:4;
+			left: 58vw;
+			border-bottom: 11vw solid #3d4a56;
+			border-left: 14vw solid transparent;
+			border-right: 14vw solid transparent;
+			color: black;
+		}
+		span:nth-child(8){
+			z-index:4;
+			left: -8vw;
+			border-bottom: 17vw solid #3d4a56;
+			border-left: 14vw solid transparent;
+			border-right: 14vw solid transparent;
+		}
+		span:nth-child(9){
+			z-index:4;
+			right: -12vw;
+			border-bottom: 11vw solid #3d4a56;
+			border-left: 14vw solid transparent;
+			border-right: 14vw solid transparent;
+		}
+		span:nth-child(10){
+			left: 3vw;
+			z-index: 2;
+			border-bottom: 11vw solid #2f6c87;
+			border-left: 14vw solid transparent;
+			border-right: 14vw solid transparent;
+		}
+		span:nth-child(11){
+			left: 20vw;
+			z-index: 3;
+			border-bottom: 14vw solid #2f6c87;
+			border-left: 14vw solid transparent;
+			border-right: 14vw solid transparent;
+		}
+		span:nth-child(12){
+			left: 41vw;
+			z-index: 3;
+			border-bottom: 8vw solid #2f6c87;
+			border-left: 9vw solid transparent;
+			border-right: 9vw solid transparent;
+		}
+		span:nth-child(13){
+			left: 74vw;
+			z-index: 3;
+			border-bottom: 10vw solid #2f6c87;
+			border-left: 8vw solid transparent;
+			border-right: 10vw solid transparent;
+		}
+		span:nth-child(14){
+			left: 49vw;
+			z-index: 3;
+			border-bottom: 11vw solid #2f6c87;
+			border-left: 10vw solid transparent;
+			border-right: 10vw solid transparent;
+		}
+		span:nth-child(15){
+			left: 19vw;
+			z-index: 2;
+			border-bottom: 35vw solid #bfc09c;
+			border-left: 30vw solid transparent;
+			border-right: 30vw solid transparent;
+		}
+		span:nth-child(16){
+			left: 9vw;
+			z-index: 1;
+			border-bottom: 25vw solid #bfc09c;
+			border-left: 20vw solid transparent;
+			border-right: 30vw solid transparent;
+		}
+	} // mountains
+}
+.houses{
+	position: absolute;
+	bottom: -1vh;
+	right: 15vw;
+	z-index: 6;
+
+	.house{
+		width: 6vw;
+		display: inline-block;
+		margin-right: 4vw;
+
+		.roof{
+			width: 0vw;
+			margin-left: -1vw;
+			border-bottom: 6vw solid @roof;
+			border-left: 4vw solid transparent;
+			border-right: 4vw solid transparent;
+		}
+		.body{
+			width:6vw;
+			height:6vw;
+			background:@house-body;
+
+			.window{
+				background: #998f9e;
+				width: 1.5vw;
+				height: 2vw;
+				display: inline-block;
+				margin: .4vw .6vw;
+			}
+		}
+
+	}
+	.house:nth-child(2){
+		.window:nth-child(1){
+			background:#f7ed6b;
+			animation: window 12s linear infinite 3s;
+			.transition(all .2s linear);
+			@keyframes window { 
+				0% { background:#f7ed6b;
+				}
+				30%{ background:#998f9e;
+
+				}
+				90% { background:#998f9e;
+
+				}
+				100% { background:#f7ed6b;
+				}
+			}
+		}
+	}
+	.house:nth-child(1){
+		.window:nth-child(3){
+			animation: window2 12s linear infinite 3s;
+			.transition(all .2s linear);
+			@keyframes window2 { 
+				0% { background:#998f9e;
+				}
+				30%{ background:#f7ed6b;
+				}
+				90% { background:#f7ed6b;
+
+				}
+				100% { background:#998f9e;
+				}
+			}
+		}
+	}
+	.house:nth-child(3){
+		.window:nth-child(2){
+			animation: window3 12s linear infinite 10s;
+			.transition(all .2s linear);
+			@keyframes window3 { 
+				0% { background:#998f9e;
+				}
+				30%{ background:#f7ed6b;
+				}
+				100% { background:#998f9e;
+				}
+			}
+		}
+	}
+
+}
+.sea {
+	position: absolute;
+	bottom: 0;
+	z-index:7;
+	left: 0;
+	background: @sea;
+	.size(100vw, 35vh);
+	width: 100vw;
+	.animation (seawave 4s ease-in-out infinite alternate);
+	transform-origin:bottom;
+
+	.city{
+		font-family: 'Marck Script', cursive;
+		color:@white;
+		font-size: 5vw;
+		position: absolute;
+		right: 10vw;
+		top: 15vh;
+		transform: rotate(-20deg);
+	}
+
+	.wave:nth-child(1){
+		visibility: hidden;
+		z-index: 10;
+		position: absolute;
+		bottom: -3vw;
+		left: -5vw;
+		margin: auto;
+		width: 30px;
+		height: 1px;
+		border-radius: 50%;
+		border: 3px solid #fff;
+		animation: wave 4s linear infinite 1s;
+
+		@keyframes wave { 
+			0% {visibility: visible;
+				opacity: 1; 
+				width: 30px;
+				height: 5px;
+			}
+			100% { visibility: visible; 
+				opacity: 0; 
+				width: 60vw;
+				height: 10vw;}
+			}
+		}
+		.wave:nth-child(2){
+			visibility: hidden;
+			z-index: 10;
+			position: absolute;
+			bottom: -3vw;
+			left: -5vw;
+			margin: auto;
+			width: 30px;
+			height: 1px;
+			border-radius: 50%;
+			border: 3px solid #fff;
+			animation: wave2 4s linear infinite 1s;
+			@keyframes wave2 { 
+				0% {visibility: visible;
+					opacity: 1; 
+					width: 30px;
+					height: 1px;
+				}
+				100% { visibility: visible;
+					opacity: 0; 
+					width: 70vw;
+					height: 12vw;
+				}
+			}
+		}
+	}
+	.stone {
+		position: absolute;
+		bottom: 0;
+		z-index: 7;
+		left: -2vw;
+		background: @stone1;
+		width: 30vw;
+		height: 10vw;
+		border-radius: 400% 200% 0% 0%;
+		display: inline-block;
+	}
+	.stone2{
+		position: absolute;
+		bottom: 0;
+		z-index: 7;
+		left: 27vw;
+		background: @stone2;
+		width: 16vw;
+		height: 7vw;
+		border-radius: 200% 1300% 0 0;
+	}
+	.statue{
+		z-index: 8;
+		position: absolute;
+		left: 23vw;
+		bottom: 30vw;
+
+		.head{
+			background: @statue-head;
+			width: 5vw;
+			height: 6vw;
+			border-radius: 100%;
+			display: block;
+			transform: skewX(8deg);
+			margin-left: 4vw;
+			z-index: 3;
+			position: relative;
+			.eye{
+				width: .5vw;
+				height: .5vw;
+				border-radius:100%;
+				background: #558987;
+				display: block;
+				right: 1vw;
+				transform: rotate(-20deg);
+				position: absolute;
+				top: 1.5vw;
+			}
+			.mouth{
+				width: 1.8vw;
+				height: .4vw;
+				border-radius: 100%;
+				background: #558987;
+				display: block;
+				right: 0vw;
+				transform: rotate(20deg);
+				position: absolute;
+				top: 3.5vw;
+			}
+			.nose{
+				width: 0.9vw;
+				height: .5vw;
+				border-radius: 100%;
+				background: #558987;
+				display: block;
+				right: -.5vw;
+				transform: rotate(-20deg);
+				position: absolute;
+				top: 2.0vw;
+			}
+		}
+		.statue-body{
+			display: block;
+			background: @statue-dark;
+			width: 5vw;
+			height: 11vw;
+			border-radius: 100%;
+			transform: skewX(-35deg);
+			margin-left: 2vw;
+			margin-top: -0.5vw;
+			z-index: 2;
+			position: relative;
+		}
+		.statue-round{
+			background: @statue-middle;
+			width: 4vw;
+			height: 4vw;
+			border-radius: 100%;
+			display: block;
+			transform: skewX(8deg);
+			margin-left: 5.5vw;
+			z-index: 1;
+			margin-top: -9vw;
+			position: relative;
+
+		}
+		.leg-right{
+			border-top: 20vw solid @statue-light;
+			border-left: 1.1vw solid transparent;
+			border-right: 1vw solid transparent;
+			top: 15vw;
+			position: absolute;
+			z-index: 1;
+		}
+		.leg-left1{
+			top: 15vw;
+			position: absolute;
+			margin-left: -10vw;
+			width: 11vw;
+			height: 1.8vw;
+			background: @statue-middle;
+			border-radius: 100%;
+			z-index: 2;
+		}
+		.leg-left2{
+			border-top: 10vw solid @statue-light;
+			border-left: 1vw solid transparent;
+			border-right: 1vw solid transparent;
+			top: 7vw;
+			position: absolute;
+			transform: rotate(215deg);
+			margin-left: -7vw;
+		}
+		.arm-right{
+			border-bottom: 18vw solid @statue-light;
+			border-left: 0.5vw solid transparent;
+			border-right: 0.6vw solid transparent;
+			top: -11.5vw;
+			margin-left: 9.5vw;
+			position: absolute;
+			transform: rotate(10deg);
+			z-index: 1;
+		}
+		.arm-left1{
+			top: 3.5vw;
+			position: absolute;
+			margin-left: -0.5vw;
+			width: 9vw;
+			height: 1.2vw;
+			background: @statue-middle;
+			border-radius: 100%;
+			transform: rotate(38deg);
+			z-index: 3;
+		}
+		.arm-left2{
+			border-bottom: 7.5vw solid @statue-light;
+			border-left: 0.6vw solid transparent;
+			border-right: 0.5vw solid transparent;
+			top: 1.0vw;
+			position: absolute;
+			transform: rotate(202deg);
+			margin-left: -1.3vw;
+		}
+	}
